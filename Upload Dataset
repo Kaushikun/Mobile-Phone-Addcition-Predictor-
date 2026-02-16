@@ -1,0 +1,6 @@
+import pandas as pd
+df = pd.read_csv('/content/mobile_addiction_data.csv')
+print("✅ YOUR EXACT COLUMNS:")
+print(df.columns.tolist())
+print("\nFirst 3 rows:")
+print(df.head(3))
