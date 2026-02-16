@@ -1,0 +1,38 @@
+--WEB APP DEPLOYMENT--
+!pip install streamlit pyngrok -q --no-cache-dir 
+
+
+!pkill -f streamlit || true &>/dev/null
+!pkill -f ngrok || true &>/dev/null
+from pyngrok import ngrok; ngrok.kill()
+
+
+app_code = '''import streamlit as st
+st.set_page_config(layout="wide")
+st.title("🟢 Working!")
+st.success("✅ Streamlit + ngrok setup perfect!")
+st.balloons()
+'''
+with open("app.py", "w") as f: f.write(app_code)
+
+
+!nohup streamlit run app.py --server.port 8501 --server.headless true >/dev/null 2>&1 &
+import time; time.sleep(3)  
+
+
+public_url = ngrok.connect(8501)
+print(f"🚀 LIVE: {public_url}")
+
+
+
+
+
+
+
+--DATASET IMPORT--
+import pandas as pd
+df = pd.read_csv('/content/mobile_addiction_data.csv')
+print("✅ YOUR EXACT COLUMNS:")
+print(df.columns.tolist())
+print("\nFirst 3 rows:")
+print(df.head(3))
